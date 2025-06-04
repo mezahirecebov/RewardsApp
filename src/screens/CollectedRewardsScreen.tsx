@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   View,
   Text,
@@ -7,10 +8,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
+
 import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+import {RootState} from '../redux/store';
 import {RootStackParamList} from '../../App';
 
 export const CollectedRewardsScreen = () => {
@@ -20,14 +23,6 @@ export const CollectedRewardsScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <TouchableOpacity
-        style={styles.navButton}
-        onPress={() => navigation.navigate('Available')}>
-        <Text style={styles.navButtonText}>← Back to Available Rewards</Text>
-      </TouchableOpacity> */}
-
-      {/* <Text style={styles.header}>Collected Rewards</Text> */}
-
       {collected.length === 0 ? (
         <Text style={styles.emptyText}>No rewards collected yet.</Text>
       ) : (

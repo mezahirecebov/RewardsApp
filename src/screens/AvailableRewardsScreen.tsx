@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
+
 import {
   View,
   Text,
@@ -7,15 +8,17 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from 'react-native';
+
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 import {RootState} from '../redux/store';
 import {collectReward, Reward} from '../redux/rewardsSlice';
 import {fetchRewards} from '../api/rewardsApi';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
-import {Image} from 'react-native';
 
 const RewardItem = React.memo(
   ({
@@ -35,9 +38,7 @@ const RewardItem = React.memo(
         <View style={styles.row}>
           <Image source={{uri: imageUrl}} style={styles.image} />
           <View style={{flex: 1}}>
-            {/* <Text style={styles.itemNumber}>{index + 1}.</Text> */}
             <Text style={styles.title}>{item.name}</Text>
-            {/* <Text>{item.needed_points} points</Text> */}
             <Text>
               {item.needed_points === 0
                 ? 'Free'
@@ -55,6 +56,7 @@ const RewardItem = React.memo(
     );
   },
 );
+
 export const AvailableRewardsScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -152,12 +154,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-  },
-  itemNumber: {
-    marginRight: 8,
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#888',
   },
   button: {
     marginTop: 8,
