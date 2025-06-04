@@ -45,7 +45,9 @@ const RewardItem = React.memo(
                 : `${item.needed_points} points`}
             </Text>
 
-            {!isCollected && (
+            {isCollected ? (
+              <Text style={styles.collectedBadge}>✅ Collected</Text>
+            ) : (
               <TouchableOpacity style={styles.button} onPress={onCollect}>
                 <Text style={styles.buttonText}>Collect</Text>
               </TouchableOpacity>
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     padding: 16,
+    // backgroundColor: '#f8f9fa',
   },
   fab: {
     position: 'absolute',
@@ -162,13 +165,22 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   itemContainer: {
-    backgroundColor: '#f0f0f0',
-    padding: 12,
-    marginVertical: 8,
-    borderRadius: 8,
+    backgroundColor: '#ffffff',
+    padding: 16,
+    marginVertical: 10,
+    marginHorizontal: 4,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
   collected: {
     opacity: 0.4,
+    backgroundColor: '#e9ecef',
   },
   title: {
     fontWeight: 'bold',
@@ -198,5 +210,11 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 8,
     marginRight: 12,
+  },
+  collectedBadge: {
+    marginTop: 6,
+    color: '#28a745',
+    fontSize: 13,
+    fontWeight: '600',
   },
 });
