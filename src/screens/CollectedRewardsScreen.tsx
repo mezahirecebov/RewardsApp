@@ -26,7 +26,7 @@ export const CollectedRewardsScreen = () => {
         <Text style={styles.navButtonText}>← Back to Available Rewards</Text>
       </TouchableOpacity> */}
 
-      <Text style={styles.header}>Collected Rewards</Text>
+      {/* <Text style={styles.header}>Collected Rewards</Text> */}
 
       {collected.length === 0 ? (
         <Text style={styles.emptyText}>No rewards collected yet.</Text>
