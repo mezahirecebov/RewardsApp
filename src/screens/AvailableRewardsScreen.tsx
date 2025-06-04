@@ -100,12 +100,6 @@ export const AvailableRewardsScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity
-        style={styles.navButton}
-        onPress={() => navigation.navigate('Collected')}>
-        <Text style={styles.navButtonText}>View Collected Rewards →</Text>
-      </TouchableOpacity>
-
       {error ? (
         <Text style={styles.error}>{error}</Text>
       ) : (
@@ -125,6 +119,14 @@ export const AvailableRewardsScreen = () => {
           ListFooterComponent={loading ? <ActivityIndicator /> : null}
         />
       )}
+
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => navigation.navigate('Collected')}
+        activeOpacity={0.8}
+        accessibilityLabel="View Collected Rewards">
+        <Text style={styles.fabIcon}>🎁</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -134,13 +136,25 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  navButton: {
-    marginBottom: 12,
-    alignSelf: 'flex-end',
+  fab: {
+    position: 'absolute',
+    right: 24,
+    bottom: 32,
+    backgroundColor: '#007bff',
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  navButtonText: {
-    color: '#007bff',
-    fontWeight: '500',
+  fabIcon: {
+    fontSize: 28,
+    color: '#fff',
   },
   itemContainer: {
     backgroundColor: '#f0f0f0',
