@@ -15,7 +15,7 @@ import {fetchRewards} from '../api/rewardsApi';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
-import {Image} from 'react-native'; // at the top with other imports
+import {Image} from 'react-native';
 
 const RewardItem = React.memo(
   ({
@@ -80,7 +80,6 @@ export const AvailableRewardsScreen = () => {
       setHasMore(Boolean(data.next));
       setPage(p => p + 1);
     } catch (err) {
-      console.error('Failed to load rewards:', err);
       setError('Failed to load rewards.');
     } finally {
       setLoading(false);
@@ -99,7 +98,6 @@ export const AvailableRewardsScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* View Collected Rewards button */}
       <TouchableOpacity
         style={styles.navButton}
         onPress={() => navigation.navigate('Collected')}>

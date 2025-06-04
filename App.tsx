@@ -6,15 +6,8 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-  View,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+
+import {useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
