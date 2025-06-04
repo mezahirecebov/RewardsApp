@@ -5,6 +5,7 @@ export type Reward = {
   name: string;
   needed_points: number;
   pictures?: string[];
+  image?: string;
 };
 
 interface RewardsState {

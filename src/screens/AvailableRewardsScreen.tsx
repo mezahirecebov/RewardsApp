@@ -15,29 +15,46 @@ import {fetchRewards} from '../api/rewardsApi';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import {Image} from 'react-native'; // at the top with other imports
 
 const RewardItem = React.memo(
   ({
     item,
     isCollected,
     onCollect,
+    index,
   }: {
     item: Reward;
     isCollected: boolean;
     onCollect: () => void;
-  }) => (
-    <View style={[styles.itemContainer, isCollected && styles.collected]}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text>{item.needed_points} points</Text>
-      {!isCollected && (
-        <TouchableOpacity style={styles.button} onPress={onCollect}>
-          <Text style={styles.buttonText}>Collect</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  ),
-);
+    index: number;
+  }) => {
+    const imageUrl = item.image || 'https://via.placeholder.com/60';
+    return (
+      <View style={[styles.itemContainer, isCollected && styles.collected]}>
+        <View style={styles.row}>
+          <Image source={{uri: imageUrl}} style={styles.image} />
+          <View style={{flex: 1}}>
+            {/* <Text style={styles.itemNumber}>{index + 1}.</Text> */}
+            <Text style={styles.title}>{item.name}</Text>
+            {/* <Text>{item.needed_points} points</Text> */}
+            <Text>
+              {item.needed_points === 0
+                ? 'Free'
+                : `${item.needed_points} points`}
+            </Text>
 
+            {!isCollected && (
+              <TouchableOpacity style={styles.button} onPress={onCollect}>
+                <Text style={styles.buttonText}>Collect</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </View>
+    );
+  },
+);
 export const AvailableRewardsScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -51,10 +68,11 @@ export const AvailableRewardsScreen = () => {
   const [hasMore, setHasMore] = useState(true);
 
   const loadRewards = useCallback(async () => {
+    console.log(`Loading rewards: page=${page}`);
     if (loading || !hasMore) return;
     try {
       setLoading(true);
-      const data = await fetchRewards(page, 95);
+      const data = await fetchRewards(page, 10);
       const newRewards = data.results.filter(
         (r: any) => r.pictures?.length || r.image,
       );
@@ -94,11 +112,12 @@ export const AvailableRewardsScreen = () => {
         <FlatList
           data={rewards}
           keyExtractor={item => item.id}
-          renderItem={({item}) => (
+          renderItem={({item, index}) => (
             <RewardItem
               item={item}
               isCollected={isRewardCollected(item.id)}
               onCollect={() => handleCollect(item)}
+              index={index}
             />
           )}
           onEndReached={loadRewards}
@@ -136,6 +155,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  itemNumber: {
+    marginRight: 8,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#888',
+  },
   button: {
     marginTop: 8,
     backgroundColor: '#007bff',
@@ -150,5 +175,15 @@ const styles = StyleSheet.create({
     color: 'red',
     padding: 16,
     textAlign: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: 12,
   },
 });
