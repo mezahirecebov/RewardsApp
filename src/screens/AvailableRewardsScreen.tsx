@@ -98,6 +98,18 @@ export const AvailableRewardsScreen = () => {
 
   const isRewardCollected = (id: string) => collected.some(r => r.id === id);
 
+  const renderRewardItem = useCallback(
+    ({item, index}: {item: Reward; index: number}) => (
+      <RewardItem
+        item={item}
+        index={index}
+        isCollected={isRewardCollected(item.id)}
+        onCollect={() => handleCollect(item)}
+      />
+    ),
+    [collected],
+  );
+
   return (
     <SafeAreaView style={styles.safeArea}>
       {error ? (
@@ -106,14 +118,7 @@ export const AvailableRewardsScreen = () => {
         <FlatList
           data={rewards}
           keyExtractor={item => item.id}
-          renderItem={({item, index}) => (
-            <RewardItem
-              item={item}
-              isCollected={isRewardCollected(item.id)}
-              onCollect={() => handleCollect(item)}
-              index={index}
-            />
-          )}
+          renderItem={renderRewardItem}
           onEndReached={loadRewards}
           onEndReachedThreshold={0.5}
           ListFooterComponent={loading ? <ActivityIndicator /> : null}
